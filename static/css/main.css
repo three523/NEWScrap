@@ -1,0 +1,149 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.5);
+    position: absolute;
+    visibility: hidden;
+    z-index: 100;
+}
+.exit-btn {
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+    float: right;
+}
+.add-list {
+    width: 100%;
+    height: 30%;
+    background-color: white;
+    border-top: 3px solid gray;
+    padding: 5px 0;
+}
+.keyword-lists {
+    background-color: aqua;
+    border-radius: 30%;
+    margin-right: 3px;
+}
+.new-email {
+    background-color: white;
+    border-radius: 5px;
+}
+.del-email {
+    background-color: white;
+    border-radius: 5px;
+}
+.default-input {
+    margin: 20px;
+    margin-right: 0;
+    height: 34px;
+}
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    background-color: aqua;
+    transition: all 500ms;
+}
+.logo {
+    width: 200px;
+    height: 100px;
+    background-color: white;
+}
+.subscribe-list {
+    display: flex;
+    justify-content: center;
+
+}
+.default-btn {
+    width: 120px;
+    height: 40px;
+    margin: 0 10px;
+}
+.news-content {
+    display: flex;
+    flex-direction: column;
+    background-color: brown;
+    height: 60%;
+    transition: all 500ms;
+}
+.news-list {
+    display: flex;
+    height: 100%;
+    background-color: orange;
+    overflow-y: scroll;
+    padding-top: 10px;
+    max-height: 100%;
+
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+.keyword-default {
+    display: flex;
+    height: 100px;
+}
+.keyword-btn{
+    height: 100%;
+    width: 10%;
+    min-width: 60px;
+    background-color: white;
+    border: solid darkgray;
+    border-width: 0 3px;
+}
+.slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+}
+.slider-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 70%;
+    padding-bottom: 5px;
+}
+.slider-img {
+    width: 80%;
+    height: 80%;
+}
+
+.news-item {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 400px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+img {
+    border-radius: 10px;
+}
+
+.image {
+    width: 100%;
+    height: 40%;
+}
