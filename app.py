@@ -19,7 +19,8 @@ def hello_world():
 
 @app.route('/news/list', methods=['GET'])
 def show_news():
-    news = list(db.main.find({},{'_id':False}).sort('_id',-1).limit(10))
+    news = list(db.main.find({},{'_id':False}).sort('_id',-1).limit(28))
+    print(list(db.email.find())[0]['keywords'].split(','))
     return jsonify({'result': 'success', 'msg': '이 요청은 GET!', 'news':news})
 
 @app.route('/email/save', methods=['POST'])

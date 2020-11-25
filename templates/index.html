@@ -6,14 +6,14 @@
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/newscrap.js')}}"></script>
-    <title>Title</title>
+    <title>Newscrap</title>
 </head>
 <body>
 <div class="wrap">
     <div class="modal" id="add-modal">
         <div class="new-email">
             <img class="exit-btn" id="add-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
-            <div class="logo"></div>
+            <div class="logo">Newscrap</div>
             <input type="text" class="default-input" id="keyword-add">
             <button id="keyword-input-btn" onclick="keywordAdd()" class="default-btn">추가</button>
             <input type="email" class="default-input" id="email-input-add">
@@ -24,13 +24,13 @@
     <div class="modal" id="del-modal">
         <div class="del-email">
             <img class="exit-btn" id="del-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
-            <div class="logo"></div>
-            <input type="email" class="email-input" id="email-input-del">
+            <div class="logo">Newscrap</div>
+            <input type="email" class="default-input" id="email-input-del">
             <button onclick="delEmail()" class="default-btn">구독취소</button>
         </div>
     </div>
     <div class="main">
-        <div class="logo"></div>
+        <h1 class="logo">Newscrap</h1>
         <div class="subscribe-list">
             <button id="email-add" onclick="addModalshow()" class="default-btn">구독하기</button>
             <button id="email-del" onclick="delModalshow()" class="default-btn">구독취소</button>
@@ -40,18 +40,14 @@
     </div>
     <div class="news-content">
         <div class="keyword-default">
-            <div class="keyword-btn"></div>
-            <div class="keyword-btn"></div>
-            <div class="keyword-btn"></div>
-            <div class="keyword-btn"></div>
+            <div class="keyword-btn">코로나</div>
             <div class="slider">
                 <div class="slider-btn" onclick="slider()">
                     <img src="static/up-arrow.png" alt="up" class="slider-img">
                 </div>
             </div>
         </div>
-        <div class="news-list">
-        </div>
+        <div class="news-list"></div>
     </div>
 </div>
 </body>

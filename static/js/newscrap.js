@@ -19,16 +19,15 @@ function delModalshow() {
 
 
 function keywordAdd() {
-    if (($('.add-list > button').length) + 1 <= 10) {
+    if (($('.add-list > button').length) + 1 <= 3) {
         keyword = $('#keyword-add').val()
         $('.add-list').append(`<button onclick="keywordDel(this)" class="keyword-lists">${keyword}</button>`)
     } else {
-        alert("키워드는 10개까지만 가능합니다")
+        alert("키워드는 3개까지만 가능합니다")
     }
 }
 
 function keywordDel(delBtn) {
-    console.log($('.add-list > button').length)
     delBtn.remove()
 }
 function isEmail(asValue) {
