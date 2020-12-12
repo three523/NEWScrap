@@ -19,11 +19,11 @@ function delModalshow() {
 
 
 function keywordAdd() {
-    if (($('.add-list > button').length) + 1 <= 3) {
+    if (($('.add-list > button').length) + 1 <= 5) {
         keyword = $('#keyword-add').val()
         $('.add-list').append(`<button onclick="keywordDel(this)" class="keyword-lists">${keyword}</button>`)
     } else {
-        alert("키워드는 3개까지만 가능합니다")
+        alert("키워드는 5개까지만 가능합니다")
     }
 }
 
@@ -55,9 +55,8 @@ function addEmail() {
                 'keywords': keywords
             },
             success: function (response) {
-                console.log(response)
                 if (response["result"] === "success") {
-                    alert(response["msg"]);
+                    // alert(response["msg"]);
                     location.reload()
                 }
             }
@@ -130,4 +129,21 @@ function showNewslist() {
             }
         }
     })
+}
+
+function reSender() {
+    email = $('#email-id').text()
+    $.ajax({
+            type: "POST",
+            url: "/resend",
+            data: {
+                'email': email,
+            },
+            success: function (response) {
+                console.log(response)
+                if (response["result"] === "success") {
+                    location.reload()
+                }
+            }
+        })
 }

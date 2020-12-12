@@ -8,14 +8,14 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 db = client.newscrap
 
-def sendMail(me, you, news_list):
+def user_sendMail(sender, receiver, news_list):
     smtp = smtplib.SMTP('smtp.gmail.com', 587)
     smtp.starttls()
     smtp.login(mailid, mailpw)
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = 'TEST'
-    msg['To'] = you
-    msg['From'] = 'Newscrap'
+    msg['Subject'] = 'Newscrap'
+    msg['To'] = receiver
+    msg['From'] = sender
 
     html = f'''
 <!DOCTYPE html>
@@ -91,12 +91,11 @@ def sendMail(me, you, news_list):
             </html>'''
 
     part = MIMEText(html, 'html')
-
     msg.attach(part)
-    smtp.sendmail(me, you, msg.as_string())
+    smtp.sendmail(sender, receiver, msg.as_string())
     smtp.quit()
 
 users = list(db.sender.find({},{'_id':False}))
 
 for user in users:
-    sendMail( mailid, user['email'], user['news'])
+    user_sendMail(mailid, user['email'], user['news'])

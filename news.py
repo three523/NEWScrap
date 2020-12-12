@@ -3,11 +3,9 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from my_project.Secret import clientid
 from my_project.Secret import clientpw
-from my_project.keyword_api import keyword_api
 
 client = MongoClient('localhost', 27017)
 db = client.newscrap
-
 
 def get_today_news(keyword):
     headers = {
@@ -41,7 +39,6 @@ def get_today_news(keyword):
         data[i]['image'] = image
         data[i]['keyword'] = keyword
 
-    print(keyword_api(data)[0])
     db.main.insert_many(data)
 
 

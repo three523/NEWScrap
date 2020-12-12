@@ -14,10 +14,12 @@
         <div class="new-email">
             <img class="exit-btn" id="add-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
             <div class="logo">Newscrap</div>
-            <input type="text" class="default-input" id="keyword-add">
-            <button id="keyword-input-btn" onclick="keywordAdd()" class="default-btn">추가</button>
-            <input type="email" class="default-input" id="email-input-add">
-            <button onclick="addEmail()" id="email-input-btn" class="default-btn">구독</button>
+            <div class="input-area">
+                <input type="text" class="default-input" id="keyword-add">
+                <button id="keyword-input-btn" onclick="keywordAdd()" class="default-btn">추가</button>
+                <input type="email" class="default-input" id="email-input-add">
+                <button onclick="addEmail()" id="email-input-btn" class="default-btn">구독</button>
+            </div>
             <div class="add-list"></div>
         </div>
     </div>
@@ -25,8 +27,10 @@
         <div class="del-email">
             <img class="exit-btn" id="del-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
             <div class="logo">Newscrap</div>
-            <input type="email" class="default-input" id="email-input-del">
-            <button onclick="delEmail()" class="default-btn">구독취소</button>
+            <div class="input-area">
+                <input type="email" class="default-input" id="email-input-del">
+                <button onclick="delEmail()" class="default-btn">구독취소</button>
+            </div>
         </div>
     </div>
     <div class="main">
@@ -35,8 +39,6 @@
             <button id="email-add" onclick="addModalshow()" class="default-btn">구독하기</button>
             <button id="email-del" onclick="delModalshow()" class="default-btn">구독취소</button>
         </div>
-
-
     </div>
     <div class="news-content">
         <div class="keyword-default">

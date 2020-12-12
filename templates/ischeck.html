@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/my_project/static/js/newscrap.js"></script>
+    <title>메일 인증</title>
+</head>
+<body style="overflow-y: hidden">
+<h1 class="logo">Newscrap</h1>
+<hr class="default-line" width="90%">
+
+
+<div class="mail-check">
+    <div class="check-area">
+        <img class="email-img" src="static/email-close.png" width="100px" height="100px" alt="">
+        <span id="email-id">{{myemail}}</span><span>님 구독해주셔서 감사합니다</span>
+        <b>존재하는 메일인지 확인을 위해 인증메일이 발송되었습니다.</b>
+        <p>메일에 발송된 코드를 아래에 입력해주시길 바랍니다</p>
+        <div class="input-area">
+            <input type="text" class="default-input">
+            <button class="default-btn">인증</button>
+        </div>
+        <hr>
+        <div class="re-sender">
+            <span>인증메일을 받지 못하셨나요?</span>
+            <button class="default-btn" onclick="reSender()">이메일 재전송</button>
+        </div>
+        <hr>
+    </div>
+</div>
+
+</body>
+</html>
