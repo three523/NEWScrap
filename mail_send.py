@@ -18,22 +18,21 @@ def user_sendMail(sender, receiver, news_list):
     msg['From'] = sender
 
     html = f'''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="wrap">
-    <div class="content" style=" width:100%; padding:40px 0; background-color:#ffffff;margin:0 auto; background: rgb(235, 235, 235);">
-        <table id="test" cellpadding="0" cellspacing="0" align="center"
-               style=" margin: 0px auto; width: 94%; max-width: 630px; background: rgb(235, 235, 235); border: 0px;">
-            <tr style="margin: 0;padding:0;">
-                <h1 style="display: flex; justify-content: center; font-size: 80px">NewScrap</h1>
-            </tr>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Title</title>
+            </head>
+            <body>
+            <div class="wrap">
+                <div class="content" style=" width:100%; padding:40px 0; background-color:#ffffff;margin:0 auto; background: rgb(235, 235, 235);">
+                    <table id="test" cellpadding="0" cellspacing="0" align="center"
+                           style=" margin: 0px auto; width: 94%; max-width: 630px; background: rgb(235, 235, 235); border: 0px;">
+                        <tr style="margin: 0;padding:0;">
+                            <h1 style="display: flex; justify-content: center; font-size: 80px">NewScrap</h1>
+                        </tr>
     '''
-
     for news in news_list:
         for i in range(0,len(news),2):
             if i != 0:

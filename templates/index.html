@@ -10,47 +10,39 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="modal" id="add-modal">
-        <div class="new-email">
-            <img class="exit-btn" id="add-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
-            <div class="logo">Newscrap</div>
-            <div class="input-area">
-                <input type="text" class="default-input" id="keyword-add">
-                <button id="keyword-input-btn" onclick="keywordAdd()" class="default-btn">추가</button>
-                <input type="email" class="default-input" id="email-input-add">
-                <button onclick="addEmail()" id="email-input-btn" class="default-btn">구독</button>
-            </div>
-            <div class="add-list"></div>
-        </div>
-    </div>
-    <div class="modal" id="del-modal">
-        <div class="del-email">
-            <img class="exit-btn" id="del-exit-btn" onclick="modalExit(this)" src="static/exit-button.png">
-            <div class="logo">Newscrap</div>
-            <div class="input-area">
-                <input type="email" class="default-input" id="email-input-del">
-                <button onclick="delEmail()" class="default-btn">구독취소</button>
-            </div>
-        </div>
+    <div class="loader-area">
+        <div class="loader"></div>
     </div>
     <div class="main">
-        <h1 class="logo">Newscrap</h1>
-        <div class="subscribe-list">
-            <button id="email-add" onclick="addModalshow()" class="default-btn">구독하기</button>
-            <button id="email-del" onclick="delModalshow()" class="default-btn">구독취소</button>
-        </div>
-    </div>
-    <div class="news-content">
-        <div class="keyword-default">
-            <div class="keyword-btn">코로나</div>
-            <div class="slider">
-                <div class="slider-btn" onclick="slider()">
-                    <img src="static/up-arrow.png" alt="up" class="slider-img">
+        <div class="main-logo">
+            <div class="logo">Newscrap</div>
+            <div class="explanation-area">
+                원하는 내용만 편하게 보고싶다고 생각해본적 없으신가요?<br>
+                Newscrap에서 원하는 키워드와 이메일을 입력해주시면 관련 뉴스를 찾아드릴게요<br>
+                키워드당 8개의 뉴스가 이메일로 보내집니다<br>
+            </div>
+            <div class="subscribe-list">
+                <div class="subscribe-add">
+                    <div class="email-input-area">
+                        <input type="text" class="input-animation" placeholder="이메일을 입력해주세요" id="input-email-add" onkeypress="if(event.keyCode==13) {addEmail()}">
+                        <button id="email-add" onclick="addEmail(this)" class="default-btn">구독하기</button>
+                    </div>
+                    <div class="keyword-input-area">
+                        <input type="text" class="input-animation" placeholder="키워드를 정확하게 입력해주세요(2개 이상 10개 이하)" id="input-emxail-keyword" onkeypress="if(event.keyCode==13) {keywordAdd()}">
+                        <button style="display: none;" id="email-keyword" onclick="keywordAdd()" class="default-btn">키워드 추가</button>
+                        <div class="add-list" id="key-list"></div>
+                    </div>
+                </div>
+                <div class="delete-input-area">
+                    <input type="text" class="input-animation" placeholder="이메일을 입력해주세요" id="input-email-del" onkeypress="if(event.keyCode==13) {delEmail()}">
+                    <button id="email-del" onclick="delEmail()" class="default-btn">구독취소</button>
                 </div>
             </div>
         </div>
-        <div class="news-list"></div>
     </div>
+    <section class="footer">
+        <p>문의사항은 thtree523@gmail.com으로 연락바랍니다</p>
+    </section>
 </div>
 </body>
 </html>

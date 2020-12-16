@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $('.news-list').empty()
-    showNewslist();
 });
 
 function addModalshow() {
@@ -16,12 +15,23 @@ function delModalshow() {
     $('.slider-btn').css('visibility', 'hidden')
 }
 
-
-
 function keywordAdd() {
-    if (($('.add-list > button').length) + 1 <= 5) {
-        keyword = $('#keyword-add').val()
-        $('.add-list').append(`<button onclick="keywordDel(this)" class="keyword-lists">${keyword}</button>`)
+    if (($('.add-list > button').length) + 1 <= 10) {
+        keyword = $('#input-emxail-keyword').val()
+        iskeyword = false
+        $('.add-list').children().each(function () {
+            iskeyword = keyword === $(this).text()
+            if (iskeyword) {
+                return
+            }
+        })
+        if (keyword === '') {
+            alert("아무것도 입력이 안되었습니다")
+        } else if (iskeyword) {
+            alert("이미 입력한 키워드입니다")
+        } else {
+            $('.add-list').append(`<button onclick="keywordDel(this)" class="keyword-lists">${keyword}</button>`)
+        }
     } else {
         alert("키워드는 5개까지만 가능합니다")
     }
@@ -30,120 +40,274 @@ function keywordAdd() {
 function keywordDel(delBtn) {
     delBtn.remove()
 }
+
 function isEmail(asValue) {
     let regExp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
     console.log(regExp.test(asValue))
     return regExp.test(asValue);
 }
-function addEmail() {
-    let email = $('#email-input-add').val()
-    let keywords = ""
-    $('.add-list').children().each(function () {
-        keywords += $(this).text()
-        keywords += ","
-    })
-    if ($('.add-list > button').length === 0) {
-        alert("키워드를 하나 이상 입력해야합니다")
-    } else if (!isEmail(email)) {
-        alert("이메일 형식이 틀립니다(예시: example@example.com)")
+
+function addEmail(btn) {
+    $('#email-del').attr('disabled', true)
+    $('#email-add').attr('disabled', true)
+    if ('none' !== $('#input-email-add').css('display')) {
+        $('#email-del').attr('disabled', false)
+        $('#email-add').attr('disabled', false)
+        let email = $('#input-email-add').val()
+        let keywords = ""
+        $('.add-list').children().each(function () {
+            keywords += $(this).text()
+            keywords += ","
+        })
+        if ($('.add-list > button').length < 2) {
+            alert("키워드를 두개 이상 입력해야합니다")
+        } else if (!isEmail(email)) {
+            alert("이메일 형식이 틀립니다(예시: example@example.com)")
+        } else {
+            $('.loader').css('display', 'block')
+            $('.loader-area').css('visibility','visible')
+            setTimeout(function () {
+                $.ajax({
+                    async: false,
+                    type: "POST",
+                    url: "/email/save",
+                    data: {
+                        'email': email,
+                        'keywords': keywords
+                    },
+                    success: function (response) {
+                        if (response['result'] === false) {
+                            alert(response['msg'])
+                        } else {
+                            $('.loader').visibility = 'hidden'
+                            document.write(response)
+                        }
+                    }
+                })
+            }, 0);
+        }
+    } else if ($('#input-email-del').css('display') !== 'none') {
+        $('#input-email-del').animate({
+            'width': '-=320'
+        }, 500, function () {
+            $('#input-email-del').css('display', 'none')
+        })
+        $('#email-del').animate({
+            'left': '-=190'
+        }, 500, function () {
+            $('.delete-input-area').animate({
+                'top': '-=80'
+            }, 500, function () {
+                subscribe = $('.subscribe-add')
+                emailArea = $('.email-input-area')
+                keywordBtn = $('#email-keyword')
+                subscribe.animate({
+                    'top': "+=80"
+                }, 500)
+                $('#email-del').animate({
+                    'margin-left': '10'
+                }, 500)
+                keywordBtn.css('display', 'block')
+                emailArea.animate({
+                    'top': "+=80"
+                }, 500, function () {
+                    $('#email-keyword').animate({
+                        'left': "+=320"
+                    }, 500, function () {
+                        $('#input-emxail-keyword').css('display', 'block')
+                        $('#email-del').attr('disabled', false)
+                        $('#email-add').attr('disabled', false)
+                        $('#input-emxail-keyword').animate({
+                            'width': '+=300'
+                        }, 500)
+                    })
+                    $('#email-add').animate({
+                        'left': "+=320"
+                    }, 500, function () {
+                        $('#input-email-add').css('display', 'block')
+                        $('#input-email-add').animate({
+                            'width': '+=300'
+                        }, 500)
+                    })
+
+                })
+            })
+        })
+
     } else {
-        $.ajax({
-            type: "POST",
-            url: "/email/save",
-            data: {
-                'email': email,
-                'keywords': keywords
-            },
-            success: function (response) {
-                if (response["result"] === "success") {
-                    // alert(response["msg"]);
-                    location.reload()
-                }
-            }
+        subscribe = $('.subscribe-add')
+        emailArea = $('.email-input-area')
+        keywordBtn = $('#email-keyword')
+        subscribe.animate({
+            'top': "+=80"
+        }, 500)
+        $('#email-del').animate({
+            'margin-left': '10'
+        }, 500)
+        keywordBtn.css('display', 'block')
+        emailArea.animate({
+            'top': "+=80"
+        }, 500, function () {
+            $('#email-keyword').animate({
+                'left': "+=320"
+            }, 500, function () {
+                $('#input-emxail-keyword').css('display', 'block')
+                $('#email-del').attr('disabled', false)
+                $('#email-add').attr('disabled', false)
+                $('#input-emxail-keyword').animate({
+                    'width': '+=300'
+                }, 500)
+            })
+            $('#email-add').animate({
+                'left': "+=320"
+            }, 500, function () {
+                $('#input-email-add').css('display', 'block')
+                $('#input-email-add').animate({
+                    'width': '+=300'
+                }, 500)
+            })
+
         })
     }
 }
 
 function delEmail() {
-    email = $('#email-input-del').val()
-    if (!isEmail(email)) {
-        alert("이메일 형식이 틀립니다(예시: example@example.com)")
-    } else {
-        $.ajax({
-            type: "POST",
-            url: "/email/del",
-            data: {
-                'email': email
-            },
-            success: function (response) {
-                if (response["result"] === "success") {
-                    alert(response["msg"]);
-                    location.reload()
+    $('.add-list').empty()
+    $('#email-del').attr('disabled', true)
+    $('#email-add').attr('disabled', true)
+    if ($('#input-email-add').css('display') === 'none' && $('#input-email-del').css('display') === 'none') {
+        $('.delete-input-area').animate({
+            'top': '+=80'
+        }, 500, function () {
+            $('#input-email-del').css('display', 'block')
+            $('#email-del').attr('disabled', false)
+            $('#email-add').attr('disabled', false)
+            $('#input-email-del').animate({
+                'width': '+=300'
+            }, 500)
+            $('#email-del').animate({
+                'left': '+=190'
+            }, 500)
+        })
+    } else if ($('#input-email-del').css('display') !== 'none') {
+        $('#email-del').attr('disabled', false)
+        $('#email-add').attr('disabled', false)
+        email = $('#input-email-del').val()
+        console.log(email)
+        if (!isEmail(email)) {
+            alert("이메일 형식이 틀립니다(예시: example@example.com)")
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/email/del",
+                data: {
+                    'email': email
+                },
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert(response["msg"]);
+                        location.reload()
+                    }
                 }
-            }
+            })
+        }
+    } else {
+        $('#input-emxail-keyword').animate({
+            'width': '0'
+        }, 500, function () {
+            $('#input-emxail-keyword').css('display', 'none')
+            $('#email-keyword').animate({
+                'left': '-=320'
+            }, 500)
+        })
+        $('#input-email-add').animate({
+            'width': '0'
+        }, 500, function () {
+            $('#input-email-add').css('display', 'none')
+            $('#input-email-add').animate({
+                'top': '-=80'
+            })
+            $('#email-add').animate({
+                'left': '-=320'
+            }, 500, function () {
+                $('#email-add').animate({
+                    'top': '-=80'
+                }, 500, function () {
+                    $('#email-keyword').css('display', 'none')
+                    $('#email-del').animate({
+                        'margin-left': '140'
+                    }, 500)
+                    $('.email-input-area').animate({
+                        'top': '-=80'
+                    }, 500, function () {
+                        $('.delete-input-area').animate({
+                            'top': '+=80'
+                        }, 500, function () {
+                            $('#input-email-del').css('display', 'block')
+                            $('#email-del').attr('disabled', false)
+                            $('#email-add').attr('disabled', false)
+                            $('#input-email-del').animate({
+                                'width': '+=300'
+                            }, 500)
+                            $('#email-del').animate({
+                                'left': '+=190'
+                            }, 500)
+                        })
+                    })
+                    $('.keyword-input-area').animate({
+                        'top': '-=80'
+                    })
+                    $('.add-list').animate({
+                        'top': '-=80'
+                    })
+                    $('#input-emxail-keyword').animate({
+                        'top': '-=80'
+                    }, 500)
+                    $('#email-keyword').animate({
+                        'top': '-=80'
+                    }, 500)
+                })
+            })
         })
     }
 }
-
-function slider() {
-    if ($('.slider-img').attr('src') === 'static/up-arrow.png') {
-        $('.news-content').css('height', '100%')
-        $('.main').css('height', '0%')
-        $('.slider-img').attr('src', 'static/down-arrow.png')
-    } else {
-        $('.news-content').css('height', '60%')
-        $('.main').css('height', '40%')
-        $('.slider-img').attr('src', 'static/up-arrow.png')
-    }
-}
-
-function modalExit(modal_btn) {
-    modal = modal_btn.parentElement.parentElement
-    modal.style.visibility = 'hidden'
-    modal_btn.style.visibility = 'hidden'
-    $('.slider-btn').css('visibility', 'visible')
-}
-
-function showNewslist() {
+function emailCheck() {
+    code = $('#code').val()
     $.ajax({
-        type: "GET",
-        url: "/news/list",
-        data: {},
+        type: "POST",
+        url: "/email/code",
+        data: {
+            'code': code,
+        },
         success: function (response) {
-            if (response["result"] === "success") {
-                news = response['news']
-                for (let i = 0; i < news.length; i++) {
-                    console.log(news)
-                    title = news[i]['title']
-                    img = news[i]['image']
-                    dec = news[i]['description']
-                    url = news[i]['link']
-
-                    $('.news-list').append(`
-                                            <a href="${url}" class="news-item">
-                                                <img src="${img}" alt="" class="image">
-                                                <h3 class="title">${title}</h3>
-                                                <div class="dec">${dec}</div>
-                                            </a>`)
-                }
+            if (response['result'] === 'success') {
+                alert(response['msg'])
+                location.reload()
+            } else {
+                alert(response['msg'])
             }
         }
     })
 }
 
-function reSender() {
-    email = $('#email-id').text()
-    $.ajax({
+function reSender(btn) {
+    $('.loader').css('display', 'block')
+    $('.loader-area').css('visibility','visible')
+    setTimeout(function () {
+        email = $('#email-id').text()
+        $.ajax({
             type: "POST",
             url: "/resend",
             data: {
                 'email': email,
             },
             success: function (response) {
-                console.log(response)
-                if (response["result"] === "success") {
-                    location.reload()
-                }
+                $('.loader').css('display', 'none')
+                $('.loader-area').css('visibility','hidden')
+                alert(response['msg'])
+                btn.disabled = false;
             }
         })
+    }, 0);
+
 }

@@ -1,7 +1,8 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from my_project.check_mail import check_sendmail
-import numpy as np
+import string
+import random
 
 client = MongoClient('localhost', 27017)
 db = client.newscrap
@@ -9,11 +10,11 @@ db = client.newscrap
 app = Flask(__name__)
 
 def rand_cd():
-    random = []
+    string_rand = string.ascii_letters + string.digits
+    result = ''
     for i in range(10):
-        random.append(str(np.random.randint(10)))
-    random = "".join(random)
-    return random
+        result += random.choice(string_rand)
+    return result
 
 def is_email(email):
     find_email = list(db.sender.find({'email': email}))
@@ -26,23 +27,16 @@ def is_email(email):
 def hello_world():
     return render_template('index.html')
 
-@app.route('/news/list', methods=['GET'])
-def show_news():
-    news = list(db.main.find({},{'_id':False}).sort('_id',-1).limit(28))
-    return jsonify({'result': 'success', 'msg': '이 요청은 GET!', 'news':news})
-
 @app.route('/email/save', methods=['POST'])
 def email_insert():
     email = request.form['email']
     keywords = request.form['keywords']
 
     if is_email(email):
-        return jsonify({'result': 'success', 'msg': '이미 구독하셨습니다'})
+        return jsonify({'result': False, 'msg': '이미 구독하셨습니다'})
     else:
-
         db.email.update_one({'email': email}, {'$set': {'keywords': keywords, 'randCD':rand_cd()}}, upsert=True)
         check_sendmail(email)
-        # return jsonify({'result': 'success', 'msg': f'{email}로 이메일을 보냈습니다. 이메일을 확인하고 인증해 주세요', 'id':email})
         return render_template('ischeck.html',myemail=email)
 
 @app.route('/email/del', methods=['POST'])
@@ -53,18 +47,28 @@ def email_delete():
         db.sender.delete_one({'email': email})
         return jsonify({'result': 'success', 'msg': '삭제되었습니다'})
     else:
+        db.sender.insert_one({})
         return jsonify({'result': 'success', 'msg': '구독하지 않은 이메일입니다'})
 
-@app.route('/ismail', methods=['GET'])
-def test():
-    return render_template('ischeck.html')
+@app.route('/email/code', methods=['POST'])
+def email_code():
+    usercd = request.form['code']
+    is_user = db.email.find_one({'randCD': usercd})
+    if not is_user:
+        return jsonify({'result': 'success', 'msg': '인증코드가 잘못돠었습니다'})
+    else:
+        db.sender.insert_one({'email': is_user['email'],
+                             'keywords': is_user['keywords']})
+        db.email.delete_one({'email':is_user['email']})
+        return jsonify({'result': 'success', 'msg': '구독이 완료되었습니다'})
 
 @app.route('/resend', methods=["POST"])
 def re_send():
     email = request.form['email']
-    db.email.updateOne({'email':email},{'$set' :{'randCD':rand_cd()}})
+    db.email.update_one({'email':email},{'$set' :{'randCD':rand_cd()}})
+    print(email)
     check_sendmail(email)
-    return jsonify({'result': 'success', 'msg': '다시 발송하였습니다'})
+    return jsonify({'msg': '다시 발송하였습니다'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
