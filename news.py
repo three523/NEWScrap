@@ -50,5 +50,4 @@ def get_keyword_news():
     return keywords
 
 keywords = get_keyword_news()
-print(keywords)
 get_email_news(keywords)
