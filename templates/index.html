@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ url_for('static', filename='js/newscrap.js')}}"></script>
     <title>Newscrap</title>
 </head>
@@ -28,7 +30,7 @@
                         <button id="email-add" onclick="addEmail(this)" class="default-btn">구독하기</button>
                     </div>
                     <div class="keyword-input-area">
-                        <input type="text" class="input-animation" placeholder="키워드를 정확하게 입력해주세요(2개 이상 10개 이하)" id="input-emxail-keyword" onkeypress="if(event.keyCode==13) {keywordAdd()}">
+                        <input type="text" class="input-animation" placeholder="키워드를 정확하게 입력해주세요(2개 이상 6개 이하)" id="input-emxail-keyword" onkeypress="if(event.keyCode==13) {keywordAdd()}">
                         <button style="display: none;" id="email-keyword" onclick="keywordAdd()" class="default-btn">키워드 추가</button>
                         <div class="add-list" id="key-list"></div>
                     </div>

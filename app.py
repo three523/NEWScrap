@@ -55,12 +55,12 @@ def email_code():
     usercd = request.form['code']
     is_user = db.email.find_one({'randCD': usercd})
     if not is_user:
-        return jsonify({'result': 'success', 'msg': '인증코드가 잘못돠었습니다'})
+        return jsonify({'result': False, 'msg': '인증코드가 잘못돠었습니다'})
     else:
         db.sender.insert_one({'email': is_user['email'],
                              'keywords': is_user['keywords']})
         db.email.delete_one({'email':is_user['email']})
-        return jsonify({'result': 'success', 'msg': '구독이 완료되었습니다'})
+        return jsonify({'result': True, 'msg': '구독이 완료되었습니다'})
 
 @app.route('/resend', methods=["POST"])
 def re_send():

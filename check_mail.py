@@ -1,7 +1,6 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from email.mime.image import MIMEImage
 from my_project.Secret import mailid
 from my_project.Secret import mailpw
 from pymongo import MongoClient
